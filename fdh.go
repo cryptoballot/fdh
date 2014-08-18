@@ -100,8 +100,8 @@ func (d *digest) checkSum() []byte {
 }
 
 // Sum returns the the Full Domain Hash checksum of the data.
-func Sum(h crypto.Hash, bitlen int, message []byte) ([]byte, error) {
+func Sum(h crypto.Hash, bitlen int, message []byte) []byte {
 	hash := New(h, bitlen)
 	hash.Write(message)
-	return hash.Sum(nil), nil
+	return hash.Sum(nil)
 }
