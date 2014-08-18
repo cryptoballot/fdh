@@ -43,7 +43,7 @@ import (
 var message = []byte("ATTACK AT DAWN")
 
 func main() {
-        digest, err := fdh.Sum(crypto.MD5, 1024, message)
+	digest, err := fdh.Sum(crypto.MD5, 1024, message)
 	if err != nil {
 		log.Fatal(err)
 	}
