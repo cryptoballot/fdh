@@ -34,9 +34,9 @@ As a shortcut you can also use the `Sum` function.
 
 ```go
 import (
-        "crypto"
-        _ "crypto/md5"
-        "github.com/cryptoballot/fdh"
+	"crypto"
+	_ "crypto/md5"
+	"github.com/cryptoballot/fdh"
 	"log"
 )
 
