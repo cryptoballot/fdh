@@ -1,10 +1,10 @@
 // Package fdh implements a Full Domain Hash (FDH) algorithm.
-// 
+//
 // An FDH is a useful cryptographic construction that extends the size of a hash digest to an arbitrary length.
-// 
+//
 // We construct an FDH by computing a number of `cycles` where cycles=(target length)/(digest length) + 1.
 // We then compute FDH(M) = HASH(M||0)||HASH(M||1)||...||HASH(M||cycles−1) where HASH is any hash function defined in package `crypto` and || denotes concatenation.
-// 
+//
 // This is usually used with an RSA signature scheme where the target length is the size of the key.
 // See https://en.wikipedia.org/wiki/Full_Domain_Hash
 package fdh
@@ -27,6 +27,7 @@ type digest struct {
 }
 
 // Given a base hash function and a target bit length, returns a new hash.Hash computing a Full Domain Hash checksum.
+// It will panic if the bitlen is not a multiple of the hash length or if the hash library is not imported.
 func New(h crypto.Hash, bitlen int) hash.Hash {
 	if !h.Available() {
 		panic("fdh: requested hash function #" + strconv.Itoa(int(h)) + " is unavailable. Make sure your hash function is proprely imported.")
@@ -100,10 +101,7 @@ func (d *digest) checkSum() []byte {
 
 // Sum returns the the Full Domain Hash checksum of the data.
 func Sum(h crypto.Hash, bitlen int, message []byte) ([]byte, error) {
-	h, err := New(h, bitlen)
-	if err != nil {
-		return nil, err
-	}
-	h.Write(message)
-	return h.Sum(nil), nil
+	hash := New(h, bitlen)
+	hash.Write(message)
+	return hash.Sum(nil), nil
 }
