@@ -11,12 +11,10 @@ package fdh
 
 import (
 	"crypto"
-	"errors"
 	"hash"
 	"strconv"
+	"sync"
 )
-
-var ErrFinalized = errors.New("Cannot write to Full Domain Hash after a call has been made to Sum() and it has been finalized.")
 
 // digest represents the partial evaluation of a Full Domain Hash checksum.
 type digest struct {
@@ -66,20 +64,24 @@ func (d *digest) Size() int {
 }
 
 // Add more data to the running hash.
-// Once Sum() is called the hash is finalized and writing to the hash will return an error
+// Once Sum() is called the hash is finalized and writing to the hash will panic
 func (d *digest) Write(p []byte) (int, error) {
 	if d.final {
-		return 0, ErrFinalized
+		panic("Cannot write to Full Domain Hash after a call has been made to Sum() and the hash has been finalized.")
 	}
-	total := 0
-	for _, h := range d.parts {
-		n, err := h.Write(p)
-		total += n
-		if err != nil {
-			return total, err
-		}
+
+	// Write to each component hash asyncronously
+	var wg sync.WaitGroup
+	for i, h := range d.parts {
+		wg.Add(1)
+		go func(i int, h hash.Hash) {
+			h.Write(p) // Hashes in crypto library don't return errors
+			wg.Done()
+		}(i, h)
 	}
-	return total, nil
+	wg.Wait()
+
+	return len(p), nil
 }
 
 // Sum appends the current hash to b and returns the resulting slice.
@@ -92,7 +94,8 @@ func (d *digest) Sum(in []byte) []byte {
 func (d *digest) checkSum() []byte {
 	var sum []byte
 	for i, h := range d.parts {
-		h.Write([]byte{byte(i)})
+		finalByte := byte(i)
+		h.Write([]byte{finalByte})
 		sum = append(sum, h.Sum(nil)...)
 	}
 	d.final = true
