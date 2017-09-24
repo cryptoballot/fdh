@@ -52,3 +52,13 @@ func main() {
 	// ... do something with digest ...
 }
 ```
+
+## Bash equivalent
+```bash
+# Expand SHA256 hash of "ATTACK AT DAWN" to 1024 bits
+\
+  echo -n -e 'ATTACK AT DAWN\x00' | shasum -a 256 &&\
+  echo -n -e 'ATTACK AT DAWN\x01' | shasum -a 256 &&\
+	echo -n -e 'ATTACK AT DAWN\x02' | shasum -a 256 &&\
+	echo -n -e 'ATTACK AT DAWN\x03' | shasum -a 256
+```
