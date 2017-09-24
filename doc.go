@@ -1,4 +1,4 @@
-// Package fdh prodvides a full domain hash.
+// Package fdh implements a full domain hash.
 //
 // A Full Domain Hash (FDH) is a useful cryptographic construction that extends the size of a hash digest to an arbitrary length
 //
