@@ -3,6 +3,7 @@ package fdh
 import (
 	"crypto"
 	"hash"
+	"math"
 	"strconv"
 	"sync"
 )
@@ -20,13 +21,14 @@ type digest struct {
 func New(h crypto.Hash, bitlen int) hash.Hash {
 	if !h.Available() {
 		panic("fdh: requested hash function #" + strconv.Itoa(int(h)) + " is unavailable. Make sure your hash function is proprely imported.")
-	} else if bitlen < h.Size()*8 {
-		panic("fdh: bitlen cannot be smaller than hash length")
-	} else if bitlen%(h.Size()*8) != 0 {
-		panic("fdh: hash digest size does not fit into bitlen")
+	} else if bitlen%8 != 0 {
+		panic("fdh: hash digest size should be a multiple of 8")
+	} else if bitlen <= 0 {
+		panic("fdh: hash digest size cannot be less or equal to zero")
 	}
 
-	numparts := bitlen / (h.Size() * 8)
+	numparts := int(math.Ceil(float64(bitlen) / float64((h.Size() * 8))))
+
 	d := digest{
 		base:  h,
 		bits:  bitlen,
@@ -38,7 +40,7 @@ func New(h crypto.Hash, bitlen int) hash.Hash {
 
 // Reset resets the Hash to its initial state.
 func (d *digest) Reset() {
-	for i, _ := range d.parts {
+	for i := range d.parts {
 		d.parts[i] = d.base.New()
 	}
 	d.final = false
@@ -85,12 +87,14 @@ func (d *digest) Sum(in []byte) []byte {
 func (d *digest) checkSum() []byte {
 	var sum []byte
 	for i, h := range d.parts {
-		finalByte := byte(i)
-		h.Write([]byte{finalByte})
+		if !d.final {
+			finalByte := byte(i)
+			h.Write([]byte{finalByte})
+		}
 		sum = append(sum, h.Sum(nil)...)
 	}
 	d.final = true
-	return sum
+	return sum[:d.bits/8]
 }
 
 // Sum returns the the Full Domain Hash checksum of the data.

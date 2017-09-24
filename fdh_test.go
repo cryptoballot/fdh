@@ -4,10 +4,35 @@ import (
 	"bytes"
 	"crypto"
 	"crypto/sha256"
+	"encoding/hex"
 	"testing"
 )
 
 var message = []byte("ATTACK AT DAWN")
+
+func TestKnownResults(t *testing.T) {
+	h := New(crypto.SHA256, 256)
+	h.Write(message)
+	// echo -n -e 'ATTACK AT DAWN\x00' | shasum -a 256
+	if hex.EncodeToString(h.Sum(nil)) != "015d53c7925b4434f00286fe2f0eb28378a49300b159b896eb2356a7c4de95f1" {
+		t.Error("Bad result on known outout")
+	}
+
+	h = New(crypto.SHA256, 128)
+	h.Write(message)
+	// echo -n -e 'ATTACK AT DAWN\x00' | shasum -a 256
+	if hex.EncodeToString(h.Sum(nil)) != "015d53c7925b4434f00286fe2f0eb283" {
+		t.Error("Bad result on known outout")
+	}
+
+	h = New(crypto.SHA256, 264)
+	h.Write(message)
+	h.Sum(nil)
+	if hex.EncodeToString(h.Sum(nil)) != "015d53c7925b4434f00286fe2f0eb28378a49300b159b896eb2356a7c4de95f158" {
+		t.Error("Bad result on known outout")
+	}
+
+}
 
 func TestSHA256(t *testing.T) {
 	h := New(crypto.SHA256, 1024)
