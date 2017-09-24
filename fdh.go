@@ -24,7 +24,7 @@ type digest struct {
 	final bool // Unlike many hash functions Full Domain Hashes are "finalized" after a call to Sum() and cannot be furthur written to.
 }
 
-// Given a base hash function and a target bit length, returns a new hash.Hash computing a Full Domain Hash checksum.
+// New returns a hash.Hash for computing a Full Domain Hash checksum, given a base hash function and a target bit length.
 // It will panic if the bitlen is not a multiple of the hash length or if the hash library is not imported.
 func New(h crypto.Hash, bitlen int) hash.Hash {
 	if !h.Available() {
