@@ -33,6 +33,13 @@ func TestKnownResults(t *testing.T) {
 		t.Error("Bad result on known outout")
 	}
 
+	h = New(crypto.SHA256, 1024)
+	h.Write(message)
+	// See READNE.md for bash command under "Bash Equivalent" sectiin.
+	if hex.EncodeToString(h.Sum(nil)) != "015d53c7925b4434f00286fe2f0eb28378a49300b159b896eb2356a7c4de95f158617fec3b813f834cd86ab0dd26b971c46b7ede451b490279628a265edf0a10691095675808b47c0add4300b3181a31109cbc31a945d05562ceb6cca0fea834d9c456fe1abf34a5a775ed572ce571b1dcca03b984102e666e9ab876876fb3af" {
+		t.Error("Bad result on known outout")
+	}
+
 }
 
 func TestSHA256(t *testing.T) {
