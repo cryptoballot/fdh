@@ -1,9 +1,10 @@
 Full Domain Hash
 ================
 
+[![Build Status](https://travis-ci.org/cryptoballot/fdh.svg?branch=master)](https://travis-ci.org/cryptoballot/fdh)
+[![Coverage Status](https://coveralls.io/repos/github/cryptoballot/fdh/badge.svg?branch=master)](https://coveralls.io/github/cryptoballot/fdh?branch=master)
 [![GoDoc](https://godoc.org/github.com/cryptoballot/fdh?status.svg)](https://godoc.org/github.com/cryptoballot/fdh)
 
-[![Build Status](https://travis-ci.org/cryptoballot/fdh.svg?branch=master)](https://travis-ci.org/cryptoballot/fdh)
 
 A Full Domain Hash (FDH) is a useful cryptographic construction that extends the size of a hash digest to an arbitrary length
 
