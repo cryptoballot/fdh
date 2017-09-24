@@ -2,11 +2,14 @@ Full Domain Hash
 ================
 
 [![Build Status](https://travis-ci.org/cryptoballot/fdh.svg?branch=master)](https://travis-ci.org/cryptoballot/fdh)
+[![Build Status](https://scrutinizer-ci.com/g/cryptoballot/fdh/badges/build.png?b=master)](https://scrutinizer-ci.com/g/cryptoballot/fdh/build-status/master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/cryptoballot/fdh)](https://goreportcard.com/report/github.com/cryptoballot/fdh)
 [![Coverage Status](https://coveralls.io/repos/github/cryptoballot/fdh/badge.svg?branch=master)](https://coveralls.io/github/cryptoballot/fdh?branch=master)
+[![Scrutinizer Issues](https://img.shields.io/badge/scrutinizer-issues-blue.svg)](https://scrutinizer-ci.com/g/cryptoballot/fdh/issues)
 [![GoDoc](https://godoc.org/github.com/cryptoballot/fdh?status.svg)](https://godoc.org/github.com/cryptoballot/fdh)
 
 
-A Full Domain Hash (FDH) is a useful cryptographic construction that extends the size of a hash digest to an arbitrary length
+A Full Domain Hash (FDH) is a useful cryptographic construction that extends the size of a hash digest to an arbitrary length. For example, SHA256 can be expanded to 1024 bits instead of the usual 256 bits.
 
 We construct an FDH by computing a number of `cycles` where `cycles=(target length)/(digest length) + 1`
 We then compute `FDH(M) = HASH(M||0)||HASH(M||1)||...||HASH(M||cycles−1)`, where `HASH` is any hash function defined in package crypto,  `||` denotes concatenation, and numerical values are binary (`\x01`, `\x02` etc). 
