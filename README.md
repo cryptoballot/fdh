@@ -2,6 +2,7 @@ Full Domain Hash
 ================
 
 [![Build Status](https://travis-ci.org/cryptoballot/fdh.svg?branch=master)](https://travis-ci.org/cryptoballot/fdh)
+[![Build Status](https://scrutinizer-ci.com/g/cryptoballot/fdh/badges/build.png?b=master)](https://scrutinizer-ci.com/g/cryptoballot/fdh/build-status/master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/cryptoballot/fdh)](https://goreportcard.com/report/github.com/cryptoballot/fdh)
 [![Coverage Status](https://coveralls.io/repos/github/cryptoballot/fdh/badge.svg?branch=master)](https://coveralls.io/github/cryptoballot/fdh?branch=master)
 [![Scrutinizer Issues](https://img.shields.io/badge/scrutinizer-issues-blue.svg)](https://scrutinizer-ci.com/g/cryptoballot/fdh/issues)
