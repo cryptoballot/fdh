@@ -5,7 +5,7 @@
 // We construct an FDH by computing a number of cycles where cycles=(target length)/(digest length) + 1We then compute
 // FDH(M) = HASH(M||0)||HASH(M||1)||...||HASH(M||cycles−1), where HASH is any hash function defined in package crypto,  || denotes concatenation, and numerical values are binary (\x01, \x02 etc).
 //
-// FDHs are usually used with an RSA signature scheme where the target length is the size of the key. See https://en.wikipedia.org/wiki/Full_Domain_Hash (https://en.wikipedia.org/wiki/Full_Domain_Hash)
+// FDHs are usually used with an RSA signature scheme where the target length is the size of the key. See https://en.wikipedia.org/wiki/Full_Domain_Hash
 //
 // Example
 //

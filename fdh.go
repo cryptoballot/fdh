@@ -1,12 +1,3 @@
-// Package fdh implements a Full Domain Hash (FDH) algorithm.
-//
-// An FDH is a useful cryptographic construction that extends the size of a hash digest to an arbitrary length.
-//
-// We construct an FDH by computing a number of `cycles` where cycles=(target length)/(digest length) + 1.
-// We then compute FDH(M) = HASH(M||0)||HASH(M||1)||...||HASH(M||cycles−1) where HASH is any hash function defined in package `crypto` and || denotes concatenation.
-//
-// This is usually used with an RSA signature scheme where the target length is the size of the key.
-// See https://en.wikipedia.org/wiki/Full_Domain_Hash
 package fdh
 
 import (
