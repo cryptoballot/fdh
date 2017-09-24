@@ -8,7 +8,7 @@ Full Domain Hash
 [![GoDoc](https://godoc.org/github.com/cryptoballot/fdh?status.svg)](https://godoc.org/github.com/cryptoballot/fdh)
 
 
-A Full Domain Hash (FDH) is a useful cryptographic construction that extends the size of a hash digest to an arbitrary length
+A Full Domain Hash (FDH) is a useful cryptographic construction that extends the size of a hash digest to an arbitrary length. For example, SHA256 can be expanded to 1024 bits instead of the usual 256 bits.
 
 We construct an FDH by computing a number of `cycles` where `cycles=(target length)/(digest length) + 1`
 We then compute `FDH(M) = HASH(M||0)||HASH(M||1)||...||HASH(M||cycles−1)`, where `HASH` is any hash function defined in package crypto,  `||` denotes concatenation, and numerical values are binary (`\x01`, `\x02` etc). 
